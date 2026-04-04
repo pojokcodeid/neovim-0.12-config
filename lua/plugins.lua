@@ -1,0 +1,5 @@
+require("plugins.theme")
+require("plugins.notify")
+require("plugins.treesitter")
+require("plugins.lsp")
+require("plugins.dashboard")
