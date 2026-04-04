@@ -12,7 +12,8 @@ vim.pack.add({
 
 local icons = require("icons").ui
 local instaled = { "stylua" }
--- mason config
+
+-- :mason config
 require("mason").setup({
 	ensure_installed = instaled,
 	ui = {
@@ -36,9 +37,9 @@ require("mason").setup({
 	log_level = vim.log.levels.INFO,
 	max_concurrent_installers = 4,
 })
--- refresh mason registry
-local mr = require("mason-registry")
 
+-- :refresh mason registry
+local mr = require("mason-registry")
 mr.refresh(function()
 	for _, tool in ipairs(instaled) do
 		local p = mr.get_package(tool)
@@ -47,7 +48,8 @@ mr.refresh(function()
 		end
 	end
 end)
--- mason lsp config
+
+-- :mason lsp config
 require("mason-lspconfig").setup({
 	ensure_installed = { "lua_ls" },
 })
@@ -68,7 +70,8 @@ vim.diagnostic.config({
 		},
 	},
 })
--- register lsp
+
+-- :register lsp
 for _, server_name in ipairs(installed_servers) do
 	local capabilities = {
 		textDocument = {
@@ -114,7 +117,7 @@ for _, server_name in ipairs(installed_servers) do
 	vim.lsp.enable(server_name)
 end
 
--- config highlight color
+-- :config highlight color
 vim.opt.termguicolors = true
 require("colorful-menu").setup({
 	render = "background",
@@ -144,7 +147,8 @@ require("colorful-menu").setup({
 	---Highlight tailwind colors, e.g. 'bg-blue-500'
 	enable_tailwind = false,
 })
--- config blink-cmp
+
+-- :config blink-cmp
 require("blink.cmp").setup({
 	snippets = { preset = "luasnip" },
 	keymap = {
@@ -320,3 +324,10 @@ require("blink.cmp").setup({
 	-- fuzzy = { implementation = "prefer_rust_with_warning" },
 	fuzzy = { implementation = "lua" },
 })
+
+-- :config snippets
+require("luasnip.loaders.from_vscode").lazy_load()
+-- :config custom snippets
+local lpath = vim.fn.stdpath("config") .. "/snippets"
+require("luasnip.loaders.from_vscode").lazy_load({ paths = lpath })
+require("luasnip.loaders.from_vscode").load({ paths = lpath })

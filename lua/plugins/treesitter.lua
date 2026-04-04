@@ -2,6 +2,7 @@
 vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
+	{ src = "https://github.com/windwp/nvim-ts-autotag" },
 })
 -- require("nvim-treesitter").setup({
 -- 	highlight = { enable = true },
@@ -41,6 +42,8 @@ require("nvim-autopairs").setup({
 		highlight_grey = "LineNr",
 	},
 })
+
+require("nvim-ts-autotag").setup({})
 
 vim.api.nvim_create_user_command("TSInstallInfo", function()
 	vim.cmd("Telescope treesitter_info")
