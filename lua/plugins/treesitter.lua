@@ -1,18 +1,24 @@
 --: treesitter
 vim.pack.add({
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
 })
-require("nvim-treesitter").setup({
-	highlight = { enable = true },
-	indent = { enable = true },
-	ensure_installed = { "lua", "luadoc", "printf", "vim", "vimdoc", "html" },
-	incremental_selection = {
-		enable = true,
-	},
-	autopairs = {
-		enable = true,
-	},
+-- require("nvim-treesitter").setup({
+-- 	highlight = { enable = true },
+-- 	indent = { enable = true },
+-- 	ensure_installed = { "lua", "luadoc", "printf", "vim", "vimdoc", "html" },
+-- 	incremental_selection = {
+-- 		enable = true,
+-- 	},
+-- 	autopairs = {
+-- 		enable = true,
+-- 	},
+-- })
+
+require("nvim-treesitter").setup({})
+require("nvim-treesitter").install({
+	"lua",
+	"vim",
 })
 
 require("nvim-autopairs").setup({
