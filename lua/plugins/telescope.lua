@@ -172,9 +172,19 @@ On_event({ "VimEnter" }, function()
 	end)
 
 	vim.keymap.set("n", "<leader>s", "", { expr = true, desc = "Search" })
-	vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { noremap = true, silent = true, desc = "Search" })
+	vim.keymap.set(
+		"n",
+		"<leader>f",
+		"<cmd>Telescope find_files<cr>",
+		{ noremap = true, silent = true, desc = "Search" }
+	)
 
-	vim.keymap.set("n", "<leader>F", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true, desc = "Find Text" })
+	vim.keymap.set(
+		"n",
+		"<leader>F",
+		"<cmd>Telescope live_grep<cr>",
+		{ noremap = true, silent = true, desc = "Find Text" }
+	)
 	vim.keymap.set(
 		"n",
 		"<leader>sb",
@@ -187,15 +197,71 @@ On_event({ "VimEnter" }, function()
 		"<cmd>Telescope colorscheme<cr>",
 		{ noremap = true, silent = true, desc = "Colorscheme" }
 	)
-	vim.keymap.set("n", "<leader>sh", "<cmd>Telescope help_tags<cr>", { noremap = true, silent = true, desc = "Find Help" })
-	vim.keymap.set("n", "<leader>sM", "<cmd>Telescope man_pages<cr>", { noremap = true, silent = true, desc = "Man Pages" })
+	vim.keymap.set(
+		"n",
+		"<leader>sh",
+		"<cmd>Telescope help_tags<cr>",
+		{ noremap = true, silent = true, desc = "Find Help" }
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>sM",
+		"<cmd>Telescope man_pages<cr>",
+		{ noremap = true, silent = true, desc = "Man Pages" }
+	)
 	vim.keymap.set(
 		"n",
 		"<leader>sr",
 		"<cmd>Telescope oldfiles<cr>",
 		{ noremap = true, silent = true, desc = "Open Recent File" }
 	)
-	vim.keymap.set("n", "<leader>sR", "<cmd>Telescope registers<cr>", { noremap = true, silent = true, desc = "Registers" })
+	vim.keymap.set(
+		"n",
+		"<leader>sR",
+		"<cmd>Telescope registers<cr>",
+		{ noremap = true, silent = true, desc = "Registers" }
+	)
 	vim.keymap.set("n", "<leader>sk", "<cmd>Telescope keymaps<cr>", { noremap = true, silent = true, desc = "Keymaps" })
-	vim.keymap.set("n", "<leader>sC", "<cmd>Telescope commands<cr>", { noremap = true, silent = true, desc = "Commands" })
+	vim.keymap.set(
+		"n",
+		"<leader>sC",
+		"<cmd>Telescope commands<cr>",
+		{ noremap = true, silent = true, desc = "Commands" }
+	)
+
+	-- Pastikan telescope sudah terinstall
+	local themes = require("telescope.themes")
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local conf = require("telescope.config").values
+
+	vim.ui.select = function(items, opts, on_choice)
+		opts = opts or {}
+		local theme = themes.get_dropdown({}) -- bisa diganti dengan themes.get_cursor atau lain
+		pickers
+			.new(theme, {
+				prompt_title = opts.prompt or "Select Item",
+				finder = finders.new_table({
+					results = items,
+					entry_maker = function(item)
+						return {
+							value = item,
+							display = opts.format_item and opts.format_item(item) or tostring(item),
+							ordinal = tostring(item),
+						}
+					end,
+				}),
+				sorter = conf.generic_sorter(theme),
+				attach_mappings = function(_, map)
+					map("i", "<CR>", function(prompt_bufnr)
+						local selection = require("telescope.actions.state").get_selected_entry()
+						require("telescope.actions").close(prompt_bufnr)
+						on_choice(selection.value)
+					end)
+					return true
+				end,
+			})
+			:find()
+	end
 end)
+

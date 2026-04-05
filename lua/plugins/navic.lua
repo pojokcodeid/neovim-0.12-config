@@ -4,12 +4,12 @@ On_event({ "BufRead", "BufNewFile" }, function()
 		"https://github.com/SmiteshP/nvim-navic",
 	})
 
-	local icons = require("icons").kind
+	local icons = require("configs.icons").kind
 	for key, value in pairs(icons) do
 		icons[key] = value .. " "
 	end
 
-    require("breadcrumbs").setup()
+	require("breadcrumbs").setup()
 	require("nvim-navic").setup({
 		icons = icons,
 		lsp = {

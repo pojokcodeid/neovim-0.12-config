@@ -1,10 +1,7 @@
-vim.pack.add({
-	{ src = "https://github.com/mason-org/mason.nvim" },
-})
-
 -- load jika dibuka
 Later(function()
 	vim.pack.add({
+		{ src = "https://github.com/mason-org/mason.nvim" },
 		{ src = "https://github.com/neovim/nvim-lspconfig" },
 		{ src = "https://github.com/mason-org/mason-lspconfig.nvim" },
 		{ src = "https://github.com/saghen/blink.cmp" },
