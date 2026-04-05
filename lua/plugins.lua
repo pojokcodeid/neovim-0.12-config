@@ -1,5 +1,5 @@
 require("plugins.theme")
-require("plugins.notifycation")
+require("plugins.notification")
 require("plugins.treesitter")
 require("plugins.lsp")
 require("plugins.dashboard")
@@ -17,3 +17,4 @@ require("plugins.nvimlint")
 require("plugins.toggleterm")
 require("plugins.bufferline")
 require("plugins.navic")
+
