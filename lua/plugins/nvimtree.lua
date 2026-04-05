@@ -11,7 +11,7 @@ On_event({ "VimEnter" }, function()
 		end,
 	})
 
-	local icons = require("icons")
+	local icons = require("configs.icons")
 	local opts = {}
 	opts.auto_reload_on_write = false
 	opts.disable_netrw = false

@@ -15,7 +15,7 @@ Later(function()
 		{ src = "https://github.com/brenoprata10/nvim-highlight-colors" },
 	})
 
-	local icons = require("icons").ui
+	local icons = require("configs.icons").ui
 	local instaled = { "stylua" }
 
 	-- :mason config
@@ -213,7 +213,7 @@ Later(function()
 		appearance = {
 			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
-			kind_icons = require("icons").kind2,
+			kind_icons = require("configs.icons").kind2,
 		},
 		completion = {
 			accept = { auto_brackets = { enabled = true } },
