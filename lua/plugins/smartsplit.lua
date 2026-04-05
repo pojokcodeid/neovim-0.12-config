@@ -1,0 +1,18 @@
+On_event({ "BufRead", "InsertEnter", "BufNewFile" }, function()
+	vim.pack.add({
+		{ src = "https://github.com/mrjones2014/smart-splits.nvim" },
+	})
+	require("smart-splits").setup({
+		ignored_filetypes = {
+			"nofile",
+			"quickfix",
+			"qf",
+			"prompt",
+		},
+		ignored_buftypes = { "nofile" },
+	})
+	vim.keymap.set("n", "<C-Left>", require("smart-splits").resize_left)
+	vim.keymap.set("n", "<C-Down>", require("smart-splits").resize_down)
+	vim.keymap.set("n", "<C-Up", require("smart-splits").resize_up)
+	vim.keymap.set("n", "<C-Right>", require("smart-splits").resize_right)
+end)
