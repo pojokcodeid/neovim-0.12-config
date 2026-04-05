@@ -104,22 +104,52 @@ On_event({ "BufRead", "BufNewFile" }, function()
 				bg = hl_attr("Normal", "bg"),
 			},
 		},
-    })
+	})
 
-    vim.keymap.set("n", "<leader>b", "", { expr = true, desc = "Buffers" })
-	vim.keymap.set("n", "<leader>bp", "<Plug>(cokeline-switch-prev)", { noremap = true, silent = true, desc = "Focus Previous buffer" })
-	vim.keymap.set("n", "<leader>bn", "<Plug>(cokeline-switch-next)", { noremap = true, silent = true, desc = "Focus next buffer" })
+	vim.keymap.set("n", "<leader>b", "", { expr = true, desc = "Buffers" })
+	vim.keymap.set(
+		"n",
+		"<leader>bp",
+		"<Plug>(cokeline-switch-prev)",
+		{ noremap = true, silent = true, desc = "Focus Previous buffer" }
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>bn",
+		"<Plug>(cokeline-switch-next)",
+		{ noremap = true, silent = true, desc = "Focus next buffer" }
+	)
 	vim.keymap.set("n", "<leader>bb", function()
-        require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({ previewer = false }))
-    end, { noremap = true, silent = true, desc = "All Buffer" })
+		require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({ previewer = false }))
+	end, { noremap = true, silent = true, desc = "All Buffer" })
 	vim.keymap.set("n", "<leader>bc", function()
-        require("pcode.user.buffer").bufremove()
-    end, { noremap = true, silent = true, desc = "Close current buffer" })
-    vim.keymap.set("n", "<S-Tab>", "<Plug>(cokeline-focus-prev)", { noremap = true, silent = true, desc = "Focus previous buffer" })
-    vim.keymap.set("n", "<Tab>", "<Plug>(cokeline-focus-next)", { noremap = true, silent = true, desc = "Focus buffer Next" })
-    vim.keymap.set("n", "<S-PageUp>", "<Plug>(cokeline-switch-prev)", { noremap = true, silent = true, desc = "Switch to previous buffer" })
-    vim.keymap.set("n", "<S-PageDown>", "<Plug>(cokeline-switch-next)", { noremap = true, silent = true, desc = "Switch to next buffer" })
-    vim.keymap.set("n", "<S-t>", function()
-				require("pcode.user.buffer").bufremove()
-			end, { noremap = true, silent = true, desc = "Close Current Buffer" })
+		require("pcode.user.buffer").bufremove()
+	end, { noremap = true, silent = true, desc = "Close current buffer" })
+	vim.keymap.set(
+		"n",
+		"<S-Tab>",
+		"<Plug>(cokeline-focus-prev)",
+		{ noremap = true, silent = true, desc = "Focus previous buffer" }
+	)
+	vim.keymap.set(
+		"n",
+		"<Tab>",
+		"<Plug>(cokeline-focus-next)",
+		{ noremap = true, silent = true, desc = "Focus buffer Next" }
+	)
+	vim.keymap.set(
+		"n",
+		"<S-PageUp>",
+		"<Plug>(cokeline-switch-prev)",
+		{ noremap = true, silent = true, desc = "Switch to previous buffer" }
+	)
+	vim.keymap.set(
+		"n",
+		"<S-PageDown>",
+		"<Plug>(cokeline-switch-next)",
+		{ noremap = true, silent = true, desc = "Switch to next buffer" }
+	)
+	vim.keymap.set("n", "<S-t>", function()
+		require("pcode.user.buffer").bufremove()
+	end, { noremap = true, silent = true, desc = "Close Current Buffer" })
 end)
