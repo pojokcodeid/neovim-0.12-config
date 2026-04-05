@@ -49,7 +49,7 @@ On_event({ "VimEnter" }, function()
 			filetypes = { "TelescopePrompt" },
 		},
 		---@type false | "classic" | "modern" | "helix"
-		preset = "helix",
+		preset = "modern",
 	})
 
 	wk.add({
