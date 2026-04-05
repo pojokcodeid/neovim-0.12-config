@@ -1,4 +1,4 @@
---: catppuccin
+--: dracula
 vim.pack.add({
 	{ src = "https://github.com/Mofiqul/dracula.nvim", name = "dracula" },
 })
@@ -62,6 +62,7 @@ require("dracula").setup({
 		NormalTab = { fg = colors.fg, bg = colors.bg },
 		ColorColumnTab = { bg = colors.selection },
 		NotifyBackground = { bg = colors.bg },
+		MatchParen = { fg = colors.fg, underline = false },
 	},
 	transparent_bg = false,
 })
