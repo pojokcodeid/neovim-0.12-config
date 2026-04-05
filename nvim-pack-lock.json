@@ -33,6 +33,10 @@
       "rev": "6731979aa370be0e5c7cc73258ce945730a515c9",
       "src": "https://github.com/saghen/blink.cmp"
     },
+    "breadcrumbs.nvim": {
+      "rev": "a59e3ee12818135098e5ce8efeb7b58b675b09ec",
+      "src": "https://github.com/LunarVim/breadcrumbs.nvim"
+    },
     "colorful-menu.nvim": {
       "rev": "b51a659459df8d078201aefc995db8175ed55e84",
       "src": "https://github.com/xzbdmw/colorful-menu.nvim"
@@ -85,6 +89,10 @@
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
+    "nvim-cokeline": {
+      "rev": "9fbed130683b7b6f73198c09e35ba4b33f547c08",
+      "src": "https://github.com/willothy/nvim-cokeline"
+    },
     "nvim-highlight-colors": {
       "rev": "e2cb22089cc2358b2b995c09578224f142de6039",
       "src": "https://github.com/brenoprata10/nvim-highlight-colors"
@@ -100,6 +108,10 @@
     "nvim-material-icon": {
       "rev": "12fdd26858f39d62fa38948401ca286697f3b3d5",
       "src": "https://github.com/pojokcodeid/nvim-material-icon"
+    },
+    "nvim-navic": {
+      "rev": "f5eba192f39b453675d115351808bd51276d9de5",
+      "src": "https://github.com/SmiteshP/nvim-navic"
     },
     "nvim-notify": {
       "rev": "8701bece920b38ea289b457f902e2ad184131a5d",
