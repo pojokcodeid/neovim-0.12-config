@@ -1,4 +1,4 @@
-On_event({ "BufRead" }, function()
+On_event({ "VimEnter" }, function()
 	vim.pack.add({
 		{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	})
@@ -44,17 +44,52 @@ On_event({ "BufRead" }, function()
 	})
 	-- stylua: ignore
 	vim.keymap.set("n", "<leader>g", "", { expr = true, desc = "Git" })
-	vim.keymap.set("n", "<leader>gg",function()LAZYGIT_TOGGLE()end,{ expr = true,desc = "Lazygit"})
-	vim.keymap.set("n", "<leader>gj",function()require("gitsigns").next_hunk()end,{ expr = true,desc = "Next Hunk"})
-	vim.keymap.set("n", "<leader>gk",function()require("gitsigns").prev_hunk()end,{ expr = true,desc = "Prev Hunk"})
-	vim.keymap.set("n", "<leader>gl",function()require("gitsigns").blame_line()end,{ expr = true,desc = "Blame"})
-	vim.keymap.set("n", "<leader>gp",function()require("gitsigns").preview_hunk()end,{ expr = true,desc = "Preview Hunk"})
-	vim.keymap.set("n", "<leader>gr",function()require("gitsigns").reset_hunk()end,{ expr = true,desc = "Reset Hunk"})
-	vim.keymap.set("n", "<leader>gR",function()require("gitsigns").reset_buffer()end,{ expr = true,desc = "Reset Buffer"})
-	vim.keymap.set("n", "<leader>gs",function()require("gitsigns").stage_hunk()end,{ expr = true,desc = "Stage Hunge"})
-	vim.keymap.set("n", "<leader>gu",function()require("gitsigns").undo_stage_hunk()end,{ expr = true,desc = "Undo Stage Hunge"})
-	vim.keymap.set("n", "<leader>go","<cmd>Telescope git_status<cr>",{ noremap = true, silent = true,desc = "Opened Changed File"})
-	vim.keymap.set("n", "<leader>gb","<cmd>Telescope git_branches<cr>",{ noremap = true, silent = true,desc = "Checkout Branch"})
-	vim.keymap.set("n", "<leader>gc","<cmd>Telescope git_commits<cr>",{ noremap = true, silent = true,desc = "Checkout Commit"})
-	vim.keymap.set("n", "<leader>gd","<cmd>Gitsigns diffthis HEAD<cr>",{ noremap = true, silent = true,desc = "Diff"})
+	vim.keymap.set("n", "<leader>gj", function()
+		require("gitsigns").next_hunk()
+	end, { expr = true, desc = "Next Hunk" })
+	vim.keymap.set("n", "<leader>gk", function()
+		require("gitsigns").prev_hunk()
+	end, { expr = true, desc = "Prev Hunk" })
+	vim.keymap.set("n", "<leader>gl", function()
+		require("gitsigns").blame_line()
+	end, { expr = true, desc = "Blame" })
+	vim.keymap.set("n", "<leader>gp", function()
+		require("gitsigns").preview_hunk()
+	end, { expr = true, desc = "Preview Hunk" })
+	vim.keymap.set("n", "<leader>gr", function()
+		require("gitsigns").reset_hunk()
+	end, { expr = true, desc = "Reset Hunk" })
+	vim.keymap.set("n", "<leader>gR", function()
+		require("gitsigns").reset_buffer()
+	end, { expr = true, desc = "Reset Buffer" })
+	vim.keymap.set("n", "<leader>gs", function()
+		require("gitsigns").stage_hunk()
+	end, { expr = true, desc = "Stage Hunge" })
+	vim.keymap.set("n", "<leader>gu", function()
+		require("gitsigns").undo_stage_hunk()
+	end, { expr = true, desc = "Undo Stage Hunge" })
+	vim.keymap.set(
+		"n",
+		"<leader>go",
+		"<cmd>Telescope git_status<cr>",
+		{ noremap = true, silent = true, desc = "Opened Changed File" }
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>gb",
+		"<cmd>Telescope git_branches<cr>",
+		{ noremap = true, silent = true, desc = "Checkout Branch" }
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>gc",
+		"<cmd>Telescope git_commits<cr>",
+		{ noremap = true, silent = true, desc = "Checkout Commit" }
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>gd",
+		"<cmd>Gitsigns diffthis HEAD<cr>",
+		{ noremap = true, silent = true, desc = "Diff" }
+	)
 end)
