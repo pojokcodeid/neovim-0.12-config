@@ -1,5 +1,6 @@
 -- load jika dibuka
-Later(function()
+-- Later(function()
+On_event({ "VimEnter" }, function()
 	vim.pack.add({
 		{ src = "https://github.com/mason-org/mason.nvim" },
 		{ src = "https://github.com/neovim/nvim-lspconfig" },
@@ -13,43 +14,14 @@ Later(function()
 	})
 
 	local icons = require("configs.icons").ui
-	local instaled = { "stylua" }
 
 	-- :mason config
 	require("mason").setup({
-		ensure_installed = instaled,
+		ensure_installed = { "stylua" },
 		ui = {
-			-- border = "none",
-			border = icons.Border,
-			icons = {
-				package_pending = icons.Pending,
-				package_installed = icons.CheckCircle,
-				package_uninstalled = icons.BlankCircle,
-			},
-			keymaps = {
-				toggle_server_expand = "<CR>",
-				install_server = "i",
-				update_server = "u",
-				check_server_version = "c",
-				update_all_servers = "U",
-				check_outdated_servers = "C",
-				uninstall_server = "X",
-			},
+			border = "rounded", -- Options: "none", "single", "double", "rounded", "solid", "shadow"
 		},
-		log_level = vim.log.levels.INFO,
-		max_concurrent_installers = 4,
 	})
-
-	-- :refresh mason registry
-	local mr = require("mason-registry")
-	mr.refresh(function()
-		for _, tool in ipairs(instaled) do
-			local p = mr.get_package(tool)
-			if not p:is_installed() then
-				p:install()
-			end
-		end
-	end)
 
 	-- :mason lsp config
 	require("mason-lspconfig").setup({
@@ -57,7 +29,11 @@ Later(function()
 	})
 	local option = {}
 	local installed_servers = require("mason-lspconfig").get_installed_servers()
-	vim.diagnostic.config({ virtual_lines = { current_line = true } })
+	local map = function(keys, func, desc, mode, bufnr)
+		mode = mode or "n"
+		vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
+	end
+
 	vim.diagnostic.config({
 		underline = false,
 		virtual_text = false,
@@ -71,6 +47,7 @@ Later(function()
 				[vim.diagnostic.severity.INFO] = " ",
 			},
 		},
+		virtual_lines = { current_line = true },
 	})
 
 	-- :register lsp
@@ -86,27 +63,23 @@ Later(function()
 		capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 		option = {
 			on_attach = function(client, bufnr)
-				local map = function(keys, func, desc, mode)
-					mode = mode or "n"
-					vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
-				end
-				map("gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration", "n")
-				map("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition", "n")
-				map("<C-LeftMouse>", "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition", "n")
-				map("K", "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover", "n")
-				map("gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation", "n")
-				map("gr", "<cmd>lua vim.lsp.buf.references()<CR>", "References", "n")
-				map("gl", "<cmd>lua vim.diagnostic.open_float()<CR>", "Show line diagnostics", "n")
-				map("<leader>l", "", "LSP", "n")
-				map("<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", "Format", "n")
-				map("<leader>li", "<cmd>LspInfo<cr>", "Information", "n")
-				map("<leader>lI", "<cmd>Mason<cr>", "Mason Information", "n")
-				map("<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action", "n")
-				map("<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", "Next Diagnostic", "n")
-				map("<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", "Prev Diagnostic", "n")
-				map("<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename", "n")
-				map("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help", "n")
-				map("<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", "Quickfix", "n")
+				map("gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration", "n", bufnr)
+				map("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition", "n", bufnr)
+				map("<C-LeftMouse>", "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition", "n", bufnr)
+				map("K", "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover", "n", bufnr)
+				map("gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation", "n", bufnr)
+				map("gr", "<cmd>lua vim.lsp.buf.references()<CR>", "References", "n", bufnr)
+				map("gl", "<cmd>lua vim.diagnostic.open_float()<CR>", "Show line diagnostics", "n", bufnr)
+				map("<leader>l", "", "LSP", "n", bufnr)
+				map("<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", "Format", "n", bufnr)
+				map("<leader>li", "<cmd>LspInfo<cr>", "Information", "n", bufnr)
+				map("<leader>lI", "<cmd>Mason<cr>", "Mason Information", "n", bufnr)
+				map("<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action", "n", bufnr)
+				map("<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", "Next Diagnostic", "n", bufnr)
+				map("<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", "Prev Diagnostic", "n", bufnr)
+				map("<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename", "n", bufnr)
+				map("<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help", "n", bufnr)
+				map("<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", "Quickfix", "n", bufnr)
 			end,
 			capabilities = capabilities,
 		}
@@ -121,34 +94,7 @@ Later(function()
 
 	-- :config highlight color
 	vim.opt.termguicolors = true
-	require("colorful-menu").setup({
-		render = "background",
-		---Set virtual symbol (requires render to be set to 'virtual')
-		virtual_symbol = "■",
-		---Set virtual symbol suffix (defaults to '')
-		virtual_symbol_prefix = "",
-		---Set virtual symbol suffix (defaults to ' ')
-		virtual_symbol_suffix = " ",
-		virtual_symbol_position = "inline",
-		---Highlight hex colors, e.g. '#FFFFFF'
-		enable_hex = true,
-		---Highlight short hex colors e.g. '#fff'
-		enable_short_hex = true,
-		---Highlight rgb colors, e.g. 'rgb(0 0 0)'
-		enable_rgb = true,
-		---Highlight hsl colors, e.g. 'hsl(150deg 30% 40%)'
-		enable_hsl = true,
-		---Highlight ansi colors, e.g '\033[0;34m'
-		enable_ansi = true,
-		-- Highlight hsl colors without function, e.g. '--foreground: 0 69% 69%;'
-		enable_hsl_without_function = true,
-		---Highlight CSS variables, e.g. 'var(--testing-color)'
-		enable_var_usage = true,
-		---Highlight named colors, e.g. 'green'
-		enable_named_colors = true,
-		---Highlight tailwind colors, e.g. 'bg-blue-500'
-		enable_tailwind = false,
-	})
+	require("colorful-menu").setup({})
 
 	-- :config blink-cmp
 	require("blink.cmp").setup({
@@ -208,20 +154,12 @@ Later(function()
 			["<C-e>"] = { "hide", "fallback" },
 		},
 		appearance = {
-			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
-			kind_icons = require("configs.icons").kind2,
 		},
 		completion = {
 			accept = { auto_brackets = { enabled = true } },
 			menu = {
-				-- min_width = 15,
-				-- max_height = 10,
-				-- n → north (atas)
-				-- s → south (bawah)
-				direction_priority = { "s", "n" },
 				border = "rounded",
-				winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:CursorLine,Search:None",
 				draw = {
 					padding = 2,
 					gap = 1,
@@ -278,16 +216,6 @@ Later(function()
 				auto_show_delay_ms = 0,
 				window = {
 					border = "rounded",
-					winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:CursorLine,Search:None",
-					-- max_width = 50,
-					-- e → east (kanan kursor)
-					-- w → west (kiri kursor)
-					-- n → north (atas)
-					-- s → south (bawah)
-					direction_priority = {
-						menu_north = { "e", "w" },
-						menu_south = { "e", "w" },
-					},
 				},
 			},
 			ghost_text = {
